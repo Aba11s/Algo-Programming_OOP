@@ -1,4 +1,4 @@
-from setting import Shopping_List
+from ProgramExerciseBL import Shopping_List
 
 def create_list():
     food_list = []
@@ -16,7 +16,7 @@ def create_list():
 
     for i in range(user_input):
         print(f"#item {i+1}-")
-        food_input = str(input("Enter food: "))
+        food_input = str(input("Enter food: ")).lower()
         print("Enter amount of pounds: ",end="")
         nested = True
         while nested:
@@ -34,8 +34,26 @@ def create_list():
     return food_list
 
 def show_items(list):
+    print("\nHere's a summary of items purchased:\n---------------------\n")
     for item in list:
-        print(item.__str__())
+        name,amount,unit_price,total_price = item.get_all()
+        print(f"item: {name}")
+        print(f"amount: {amount} pounds")
+        print("unit price ($/lbs): ${:0,.2f}".format(unit_price))
+        print("price of order: ${:0,.2f}\n".format(total_price))
 
-list1 = create_list()
-show_items(list1)
+def calculate_total(list):
+    total = 0
+    for item in list:
+        total += item.get_total()
+    return total
+
+def main():
+    yomama = create_list()
+    show_items(yomama)
+    print("total cost is: ${:0,.2f}".format(calculate_total(yomama)))
+
+#run
+if __name__ == "__main__":
+    main()
+
